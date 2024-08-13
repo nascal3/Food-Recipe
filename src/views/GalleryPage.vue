@@ -1,6 +1,14 @@
 <script setup>
 import RecipeCard from "@/components/RecipeCard.vue";
+import http from '../../middleware/HttpController.js'
+import { onMounted, ref } from 'vue'
 
+const Recipes = ref([])
+onMounted(() => {
+  http.get('/search.php?s=Canadian').then(res => {
+    Recipes.value.push(res.data.meals)
+  })
+})
 </script>
 
 <template>
@@ -13,9 +21,7 @@ import RecipeCard from "@/components/RecipeCard.vue";
       </div>
     </div>
     <div class="list">
-      <RecipeCard />
-      <RecipeCard />
-      <RecipeCard />
+      <RecipeCard v-for="recipe in Recipes" :key="recipe.idMeal" />
     </div>
   </div>
 </template>

@@ -16,5 +16,6 @@
     border: 1px solid gray;
     border-radius: 8px;
     background: #FFFFFF;
+    padding: 10px;
   }
 </style>
