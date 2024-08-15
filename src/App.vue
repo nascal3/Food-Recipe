@@ -1,9 +1,8 @@
 <script setup>
-  import Gallery from "@/views/GalleryPage.vue";
 </script>
 
 <template>
-  <Gallery />
+  <router-view />
 </template>
 
 <style>

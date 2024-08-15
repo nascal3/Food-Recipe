@@ -8,14 +8,16 @@
 
 <template>
   <div class="card">
-    <img :src="recipe.strMealThumb" alt="">
-    <div class="title">{{ recipe.strMeal }}</div>
-
+    <router-link :to="{ name: 'recipe', params: {id: recipe.idMeal} }">
+      <img :src="recipe.strMealThumb" alt="">
+      <div class="title">{{ recipe.strMeal }}</div>
+    </router-link>
   </div>
 </template>
 
 <style lang="scss" scoped>
   .card {
+    margin-bottom: 20px;
     min-height: 270px;
     max-height: 320px;
     width: 300px;

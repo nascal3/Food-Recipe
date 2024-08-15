@@ -1,14 +1,34 @@
 <script setup>
 import RecipeCard from "@/components/RecipeCard.vue";
 import http from '../../middleware/HttpController.js'
-import { onMounted, ref } from 'vue'
+import {onMounted, ref, watch} from 'vue'
 
+const search = ref('')
 const Recipes = ref([])
 onMounted(() => {
   http.get('/search.php?s=Canadian').then(res => {
     Recipes.value = res.data.meals
   })
 })
+
+const searchByLocation = (search) => {
+  http.get(`/filter.php?a=${search}`).then(res => {
+    Recipes.value = res.data.meals
+  })
+}
+
+watch(
+    search,
+  (newValue) => {
+    if (newValue) {
+      searchByLocation(newValue)
+    } else {
+      http.get('/search.php?s=Canadian').then(res => {
+        Recipes.value = res.data.meals
+      })
+    }
+  }
+)
 </script>
 
 <template>
@@ -16,7 +36,7 @@ onMounted(() => {
     <div class="header">
       <div class="title"> Search: </div>
       <div class="input-wrapper">
-        <input type="text" name="" id="">
+        <input type="text" name="" v-model="search">
         <i class="fa fa-search" aria-hidden="true"></i>
       </div>
     </div>
@@ -53,6 +73,7 @@ onMounted(() => {
   display: flex;
   justify-content: space-around;
   flex: 1;
+  flex-wrap: wrap;
   margin-top: 20px;
   background: #bdc3c7;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
