@@ -6,7 +6,7 @@ import { onMounted, ref } from 'vue'
 const Recipes = ref([])
 onMounted(() => {
   http.get('/search.php?s=Canadian').then(res => {
-    Recipes.value.push(res.data.meals)
+    Recipes.value = res.data.meals
   })
 })
 </script>
@@ -21,7 +21,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="list">
-      <RecipeCard v-for="recipe in Recipes" :key="recipe.idMeal" />
+      <RecipeCard v-for="recipe in Recipes" :key="recipe.idMeal" :recipe="recipe" />
     </div>
   </div>
 </template>
